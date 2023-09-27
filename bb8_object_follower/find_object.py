@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import CompressedImage, Image
@@ -49,15 +47,8 @@ class ImageSubscriber(Node):
             image_qos_profile)
         self._image_subscriber  # Prevents unused variable warning.
 
-        self._coordinate_publisher = self.create_publisher(
-            Point,
-            'pixel_coordinate',
-            10)
-
-        self._image_publisher = self.create_publisher(
-            Image,
-            'processed_image',
-            10)
+        self._coordinate_publisher = self.create_publisher(Point, 'pixel_coordinate', 10)
+        self._image_publisher = self.create_publisher(Image, 'processed_image', 10)
 
         timer_period = 0.5  # seconds
         self.timer = self.create_timer(timer_period, self._timer_callback)
@@ -74,22 +65,26 @@ class ImageSubscriber(Node):
             for circle in circles[0, :]:
                 # Print the pixel location
                 self._xc, self._yc, self._radius = circle[0], circle[1], circle[2]
-                # print(f"Object Center Location (x, y): ({self._xc}, {self._yc})")
                 # draw the outer circle (bounding boxes)
                 cv2.circle(self._imgBGR, (self._xc, self._yc), self._radius, (255, 0, 0), 7)
                 # draw the center of the circle
                 cv2.circle(self._imgBGR, (self._xc, self._yc), 2, (0, 0, 255), 3)
+                # record the center of circle to Point
+                point = Point()
+                point.x = self._xc
+                point.y = self._yc
+                point.z = 0.0
 
         if self._display_image:
             # Display the image in a window
             self.show_image(self._imgBGR)
 
-    def _timer_callback(self):
-        point = Point()
-        point.x = self._xc
-        point.y = self._yc
-        point.z = 0.0
-        self.publisher_.publish(point)
+    def _timer_callback(self,Point): #NEED TO FIXXX
+        # point = Point()
+        # point.x = circle[0]
+        # point.y = circle[1]
+        # point.z = 0.0
+        self.publisher_.publish(Point)
 
     def show_image(self, img):
         cv2.imshow(self._titleOriginal, img)
@@ -105,7 +100,7 @@ def main():
     image_subscriber = ImageSubscriber()  # Create class object to be used.
 
     while rclpy.ok():
-        rclpy.spin(image_subscriber)  # Trigger callback processing.
+        rclpy.spin_once(image_subscriber)  # Trigger callback processing.
         if image_subscriber._display_image:
             if image_subscriber.get_user_input() == ord('q'):
                 cv2.destroyAllWindows()
