@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
         	'find_object=bb8_object_follower.find_object:main',
         	'debug_node=bb8_object_follower.debug_node:main',
+        	'rotate_robot=bb8_object_follower.rotate_robot:main'
         ],
     },
 )

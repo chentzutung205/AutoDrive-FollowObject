@@ -28,10 +28,10 @@ class ImageSubscriber(Node):
         self._titleOriginal = self.get_parameter('window_name').value  # Image Window Title
 
         # Only create image frames if we are not running headless (_display_image sets this)
-        if (self._display_image):
-            # Set Up Image Viewing
-            cv2.namedWindow(self._titleOriginal, cv2.WINDOW_AUTOSIZE)  # Viewing Window
-            cv2.moveWindow(self._titleOriginal, 50, 50)  # Viewing Window Original Location
+        # if (self._display_image):
+        #     # Set Up Image Viewing
+        #     cv2.namedWindow(self._titleOriginal, cv2.WINDOW_AUTOSIZE)  # Viewing Window
+        #     cv2.moveWindow(self._titleOriginal, 50, 50)  # Viewing Window Original Location
 
         # Set up QoS Profiles for passing images over Wi-Fi
         image_qos_profile = QoSProfile(
@@ -79,10 +79,10 @@ class ImageSubscriber(Node):
                 # draw the center of the circle
                 cv2.circle(self._imgBGR, (xc, yc), 2, (0, 0, 255), 3)
 
-        if (self._display_image):
-            # Display the image in a window
-            self.show_image(self._imgBGR)
-            cv2.waitKey(1)
+        # if (self._display_image):
+        #     # Display the image in a window
+        #     self.show_image(self._imgBGR)
+        #     cv2.waitKey(1)
 
         self.publish_point(circles)
 
@@ -99,13 +99,14 @@ class ImageSubscriber(Node):
 def main():
     rclpy.init()  # init routine needed for ROS2.
     image_subscriber = ImageSubscriber()  # Create class object to be used.
-
-    while rclpy.ok():
-        rclpy.spin(image_subscriber)  # Trigger callback processing.
-        if image_subscriber._display_image:
-            if image_subscriber.get_user_input() == ord('q'):
-                cv2.destroyAllWindows()
-                break
+    rclpy.spin(image_subscriber)  # Trigger callback processing.
+    
+    # while rclpy.ok():
+    #     rclpy.spin(image_subscriber)  # Trigger callback processing.
+    #     if image_subscriber._display_image:
+    #         if image_subscriber.get_user_input() == ord('q'):
+    #             cv2.destroyAllWindows()
+    #             break
 
     # Clean up and shutdown.
     image_subscriber.destroy_node()
