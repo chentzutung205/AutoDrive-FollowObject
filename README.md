@@ -11,7 +11,6 @@ This ROS2 package enables a Turtlebot 3 to turn in place and follow an object. I
 - sensor_msgs
 - std_msgs
 - geometry_msgs
-- image_transport_plugins (for viewing compressed images on your computer)
 
 ## Nodes
 **1. find_object**
