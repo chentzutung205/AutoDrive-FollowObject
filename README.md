@@ -1,6 +1,6 @@
 # Object Follower
 
-This project is a part of the larger Autonomous Vehicle initiative.
+This project is a part of the larger Autonomous Vehicle initiative. BB-8, affectionately known as "Beebee-Ate," is a lovable and intelligent droid character from the __Star Wars__ franchise. Inspired by this iconic character, our robot BB-8 is designed to navigate and interact with its environment, showcasing advanced capabilities in object tracking and autonomous navigation.
 
 ## Overview
 
