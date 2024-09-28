@@ -1,20 +1,19 @@
-# Autonomous Vehicles Project
-## Object Follower
+# Object Follower
 
-**Overview**
+This project is a part of the larger Autonomous Vehicle initiative.
+
+## Overview
 
 This ROS2 package enables a Turtlebot 3 to turn in place and follow an object. It consists of three main nodes that work together to process camera images, control the robot's movement, and provide debugging capabilities.
 
-**Dependencies**
-
+## Dependencies
 - ROS2 Humble
 - sensor_msgs
 - std_msgs
 - geometry_msgs
 - image_transport_plugins (for viewing compressed images on your computer)
 
-**Nodes**
-
+## Nodes
 **1. find_object**
 
 This node subscribes to the Raspberry Pi Camera topic /image_raw/compressed and processes the images to identify the location of an object. It then publishes the pixel coordinates of the object.
@@ -27,21 +26,19 @@ This node subscribes to the object coordinate messages from the find_object node
 
 This node is designed to run on your personal computer and allows you to visualize the processed images from the Turtlebot.
 
-**Usage**
+## Usage
 1. Ensure all dependencies are installed.
 2. Clone this package into your ROS2 workspace.
 3. Build the package using colcon build.
 4. Source your workspace.
-
-**Run the nodes using:**
-
+5. Run the nodes using:
 ```
 ros2 run bb8_object_follower find_object
 ros2 run bb8_object_follower rotate_robot
 ros2 run bb8_object_follower debug_node
 ```
 
-**Launch File**
+## Launch File
 
 **Note:** The current launch file in this package may be incorrect. Please review and update it as necessary. Here's an example of what it might look like:
 ```
@@ -73,14 +70,14 @@ def generate_launch_description():
 
 Ensure that the package name, executable names, and namespaces match your actual implementation.
 
-**Camera Setup**
+## Camera Setup
 
 To capture images from the Raspberry Pi camera, use the v4l2_camera_node:
 ```
 ros2 run v4l2_camera v4l2_camera_node -ros-args -params-file ./v4l2_camera.yaml
 ```
 
-**Tips**
+## Tips
 - Consider using launch files for easier startup of multiple nodes.
 - Adjust QoS settings if experiencing network lag or dropped connections.
 - For development and initial testing, you can use the Gazebo simulation environment.
